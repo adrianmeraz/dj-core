@@ -13,14 +13,9 @@ jobs:
     env:
       PYTHON: '3.8'
       DATABASE_URL: ${{secrets.DATABASE_URL}}
-      DEFAULT_FROM_EMAIL: ${{secrets.DEFAULT_FROM_EMAIL}}
       DJANGO_SETTINGS_MODULE: ${{secrets.DJANGO_SETTINGS_MODULE}}
-      EMAIL_HOST: ${{secrets.EMAIL_HOST}}
-      EMAIL_HOST_PASSWORD: ${{secrets.EMAIL_HOST_PASSWORD}}
-      EMAIL_HOST_USER: ${{secrets.EMAIL_HOST_USER}}
       LOGLEVEL: ${{secrets.LOGLEVEL}}
       PYTHONUNBUFFERED: ${{secrets.PYTHONUNBUFFERED}}
-      S3_BUCKET: ${{secrets.S3_BUCKET}}
       SECRET_KEY: ${{secrets.SECRET_KEY}}
     services:
       postgres:
@@ -87,8 +82,3 @@ jobs:
       with:
         fail_ci_if_error: true
         token: ${{ secrets.CODECOV_TOKEN }} # not required for public repos
-
-    - name: Update Django application using zappa
-      run: |
-        poetry run zappa update dev
-        poetry run zappa manage dev "migrate"
