@@ -2,10 +2,6 @@ from http import HTTPStatus
 from unittest.mock import Mock
 
 import httpx
-from django.conf import settings
-
-from django.db import connections, connection, transaction
-from django.db.utils import DEFAULT_DB_ALIAS, load_backend
 from django.test import TestCase
 from httpx import Request, Response
 
