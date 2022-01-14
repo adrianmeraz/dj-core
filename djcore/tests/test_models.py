@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from core.models import ListItem
+from djcore.models import ListItem
 
 
 class ListItemTests(TestCase):

@@ -1,6 +1,6 @@
 from django.apps import AppConfig
 
 
-class CoreConfig(AppConfig):
-    name = 'dj-core'
+class DJCoreConfig(AppConfig):
+    name = 'djcore'
     verbose_name = 'DJ Core'

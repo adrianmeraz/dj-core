@@ -1,6 +1,6 @@
 from django.test import TestCase
 
-from core.models import AuthUser, ListItem
+from djcore.models import AuthUser, ListItem
 
 
 class AuthManagerTests(TestCase):

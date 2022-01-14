@@ -2,7 +2,7 @@ from datetime import datetime, timezone
 
 from django.test import TestCase, TransactionTestCase
 
-from core import utils
+from djcore import utils
 
 
 class QueuedExecutorTests(TransactionTestCase):

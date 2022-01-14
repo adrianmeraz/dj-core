@@ -169,6 +169,13 @@ sudo -u postgres psql
 postgres=# create database <DB_NAME>;
 postgres=# create user <DB_USERNAME> with encrypted password '<DB_PASSWORD>';
 postgres=# grant all privileges on database <DB_NAME> to <DB_USERNAME>;
+postgres=# ALTER USER <DB_USERNAME> CREATEDB;
+```
+
+To Delete the local database, run:
+
+```
+postgres=# DROP DATABASE <DB_NAME>;
 ```
 
 ### Local jdbc string
@@ -185,20 +192,6 @@ Run the command from the project root to create the database and service user
 
 `poetry run python manage.py create_db --db-url="<DB_INSTANCE_URL>" --db-name="<NEW_DB_NAME>" --db-username="<NEW_DB_USERNAME>" --db-password="<NEW_DB_PASSWORD>"`
 
-### Create Remote RDS Postgres Instance (Optional)
-
-Select RDS Postgres DB
-
-Select Magnetic Storage and Provision for 5 GB
-
-Under "Additional Configuration", set the database name
-
-It is highly important to set the Database Name during setup or a database will not be created
-
-## Add RDS Proxy
-
-To Prevent too many connections to the DB, use the RDS Proxy Connection Pooler.
-
 ### Proxy Setup
 
 Click "Create Proxy"
@@ -211,10 +204,6 @@ git add .
 poetry run python manage.py migrate
 poetry run python manage.py createsuperuser
 ```
-
-### Initialize Aurora Serverless Database (Optional)
-
-DB is only accessible inside same VPC as the Lambda, so run the following commands
 
 ### Create Super User
 
@@ -231,37 +220,7 @@ poetry run zappa manage <STAGE_NAME> "migrate"
 poetry run zappa manage <STAGE_NAME> "createsuperuser --noinput"
 ```
 
-### Enable ACLs
-
-Select "Edit Object Ownership" > "ACLs enabled"
-
-Object Ownership > Object Writer
-
-### Upload Static Resources Bundle to S3
-
-Set `S3_BUCKET` in .env to target bucket
-
-Run command:
-
-```
-poetry run python manage.py collectstatic --noinput --settings=config.settings.local
-```
-
-### Start Local Instance
-
-Use the local settings file when starting the server
-
-```
-poetry run python manage.py runserver 5100 --settings=config.settings.local
-```
-
 ## Admin Commands
-
-
-### Get Marz Public Channels
-```
-poetry run python manage.py marz_get_public_channels --username {username} --password {password}
-```
 
 ## Poetry Utilities
 
@@ -327,7 +286,7 @@ Specify settings with `--settings`
 
 To run against a single module, add the module name:
 
-`poetry run python manage.py test marz.tests.test_views --settings=config.settings.local --no-input --parallel`
+`poetry run python manage.py test djcore.tests.test_views --settings=config.settings.local --no-input --parallel`
 
 ### Faster Tests
 
@@ -335,14 +294,6 @@ To run against a single module, add the module name:
 
 ```
 coverage run manage.py test --settings=config.settings.local --keepdb
-```
-
-### Limiting Test Scope
-
-To run tests against a single test module, for example `marz.tests.test_views`, run:
-
-```
-poetry run python manage.py test marz.tests.test_views --settings=config.settings.local --parallel
 ```
 
 ### Generate Coverage Report
@@ -365,3 +316,20 @@ This creates the directory coverage html. Open the index.html to see the full re
 
 If the numbers reported aren't what's expected, or tests are missing, verify that an empty `__init__.py`
 is in the `tests` directory for each app.
+
+---
+
+## Contributions
+
+Contributions are encouraged and welcome! 
+
+The general steps to contribute are:
+
+1. Create an issue for a feature/bug, if not already created
+2. Create a feature branch with the issue in the name
+   1. Example: If the issue is `#123`, create the branch as `feature/DC-123`
+3. Write Tests
+4. Write Code - All code must have tests and cannot lower coverage!
+5. Verify all tests pass
+6. Pull all and merge all changes from the dev branch
+7. Create a pull request to merge into the dev branch

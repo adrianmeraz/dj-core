@@ -170,9 +170,9 @@ class AuthUser(AbstractUser):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     class Meta:
-        db_table = 'core_authuser'
+        db_table = 'djcore_authuser'
         ordering = ['-username']
-        app_label = 'core'
+        app_label = 'djcore'
 
 
 class ListItem(BaseModel):
@@ -183,9 +183,9 @@ class ListItem(BaseModel):
     objects = managers.ListItemManager()
 
     class Meta:
-        db_table = 'core_listitem'
+        db_table = 'djcore_listitem'
         ordering = ['-created']
-        app_label = 'core'
+        app_label = 'djcore'
         constraints = [
             models.UniqueConstraint(fields=['group', 'label'], name='list_item_unique'),
         ]

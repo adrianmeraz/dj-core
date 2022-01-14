@@ -1,11 +1,11 @@
+from http import HTTPStatus
 from unittest.mock import Mock
 
 import httpx
 from django.test import TestCase
 from httpx import Request, Response
-from rest_framework import status
 
-from core import decorators, exceptions
+from djcore import decorators, exceptions
 
 
 class DecoratorTests(TestCase):
@@ -33,7 +33,7 @@ class DecoratorTests(TestCase):
             request=request,
             response=Response(
                 request=request,
-                status_code=status.HTTP_400_BAD_REQUEST,
+                status_code=HTTPStatus.BAD_REQUEST,
             ),
             message='test'
         ))
@@ -47,7 +47,7 @@ class DecoratorTests(TestCase):
             request=request,
             response=Response(
                 request=request,
-                status_code=status.HTTP_502_BAD_GATEWAY,
+                status_code=HTTPStatus.BAD_GATEWAY,
             ),
             message='test'
         ))
