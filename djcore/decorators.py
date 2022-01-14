@@ -79,7 +79,7 @@ def wrap_exceptions(raise_as):
 
 def db_conn_close(func):
     """
-    Closes open db connection after check if we are in a tranasction block.
+    Closes open db connection after check if we are in a transaction block.
     This is important to check since TestCases fail if this check isn't performed
 
     :param func:

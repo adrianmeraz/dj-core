@@ -2,13 +2,17 @@ from http import HTTPStatus
 from unittest.mock import Mock
 
 import httpx
+from django.conf import settings
+
+from django.db import connections, connection, transaction
+from django.db.utils import DEFAULT_DB_ALIAS, load_backend
 from django.test import TestCase
 from httpx import Request, Response
 
 from djcore import decorators, exceptions
 
 
-class DecoratorTests(TestCase):
+class RetryTests(TestCase):
     """
     Decorator Tests
     """
@@ -26,6 +30,9 @@ class DecoratorTests(TestCase):
         with self.assertRaises(exceptions.ApiError):
             decorated_function()
         self.assertEquals(func.call_count, tries)
+
+
+class APIErrorCheckTests(TestCase):
 
     def test_check_response_400(self):
         request = Request(url='', method='')
@@ -54,6 +61,36 @@ class DecoratorTests(TestCase):
         decorated_function = decorators.api_error_check(func)
         with self.assertRaises(httpx.HTTPStatusError):
             decorated_function()
+
+
+class WrapExceptions(TestCase):
+
+    def test_wrap_exceptions(self):
+
+        func = Mock(side_effect=ValueError())
+
+        with self.assertRaises(RuntimeError):
+            decorators.wrap_exceptions(raise_as=RuntimeError)(func)()
+
+
+class DBConnCloseExceptions(TestCase):
+
+    def test_db_conn_close(self):
+        func = Mock()
+        decorators.db_conn_close(func)()
+        self.assertEquals(func.call_count, 1)
+
+
+class TimingTests(TestCase):
+
+    def test_timing(self):
+        func = Mock(return_value=True)
+        func.__name__ = 'test_func'
+        decorators.timing(func)()
+        self.assertEquals(func.call_count, 1)
+
+
+class DelayFnTests(TestCase):
 
     def test_delay_fn(self):
         def double(x): return 2 * x
