@@ -1,5 +1,8 @@
 # DJ Core - Bootstrap Django Projects
 
+[![codecov](https://codecov.io/gh/adrianmeraz/dj-core/branch/master/graph/badge.svg?token=SV085I4DGJ)](https://codecov.io/gh/adrianmeraz/dj-core)
+![test-status](https://github.com/adrianmeraz/dj-core/actions/workflows/dev.yml/badge.svg?branch=dev)
+
 ## Setup Local Dev Environment
 
 ### Setup SSH Keys
@@ -98,6 +101,12 @@ Use .env example to set environment variables.
 When deploying to remote environments, the environment variables must be set in Git secrets, as well as
 the lambda deployment.
 
+### Verify Github Action Secret
+
+`DATABASE_URL` should be set to `postgres://postgres:postgres@localhost:5432/postgres`
+
+This should match values in the github actions yml
+
 ### Install Poetry
 
 Install poetry with instructions [HERE](https://python-poetry.org/docs/#installation)
@@ -191,10 +200,6 @@ The initial database url will be:
 Run the command from the project root to create the database and service user
 
 `poetry run python manage.py create_db --db-url="<DB_INSTANCE_URL>" --db-name="<NEW_DB_NAME>" --db-username="<NEW_DB_USERNAME>" --db-password="<NEW_DB_PASSWORD>"`
-
-### Proxy Setup
-
-Click "Create Proxy"
 
 ### Initialize Database
 
