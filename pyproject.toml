@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "dj-core"
-version = "0.1.0"
+version = "0.1.1"
 description = "Bootstrap Django Projects with Common Models and Utilities"
 authors = ["Adrian <adrian@rydeas.com>"]
 repository = "https://github.com/adrianmeraz/dj-core"
