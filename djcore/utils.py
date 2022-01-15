@@ -142,8 +142,7 @@ class Pager:
         return self.items_per_page
 
 
-def abbrev_str(s, max_length):
-    s = str(s)
+def abbrev_str(s: str, max_length) -> str:
     return f'{s[:max_length]}...' if len(s) > max_length else s
 
 
