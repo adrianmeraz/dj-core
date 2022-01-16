@@ -1,12 +1,12 @@
 [tool.poetry]
-name = "dj-core"
+name = "dj-starter"
 version = "0.1.1"
-description = "Bootstrap Django Projects with Common Models and Utilities"
+description = "Django Project Bootstraper with Common Models and Utilities"
 authors = ["Adrian <adrian@rydeas.com>"]
-repository = "https://github.com/adrianmeraz/dj-core"
+repository = "https://github.com/adrianmeraz/dj-starter"
 
 packages = [
-    { include = "djcore" }
+    { include = "djstarter" }
 ]
 exclude = [
     "manage.py"
