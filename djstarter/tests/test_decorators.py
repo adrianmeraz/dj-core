@@ -5,7 +5,7 @@ import httpx
 from django.test import TestCase
 from httpx import Request, Response
 
-from djcore import decorators, exceptions
+from djstarter import decorators, exceptions
 
 
 class RetryTests(TestCase):

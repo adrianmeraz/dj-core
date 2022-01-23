@@ -1,7 +1,7 @@
-# DJ Core - Bootstrap Django Projects
+# DJ Starter - Bootstrap Django Projects
 
-[![codecov](https://codecov.io/gh/adrianmeraz/dj-core/branch/master/graph/badge.svg?token=SV085I4DGJ)](https://codecov.io/gh/adrianmeraz/dj-core)
-![test-status](https://github.com/adrianmeraz/dj-core/actions/workflows/dev.yml/badge.svg?branch=dev)
+[![codecov](https://codecov.io/gh/adrianmeraz/dj-starter/branch/master/graph/badge.svg?token=SV085I4DGJ)](https://codecov.io/gh/adrianmeraz/dj-starter)
+![test-status](https://github.com/adrianmeraz/dj-starter/actions/workflows/dev.yml/badge.svg?branch=dev)
 
 ## Setup Local Dev Environment
 
@@ -291,7 +291,7 @@ Specify settings with `--settings`
 
 To run against a single module, add the module name:
 
-`poetry run python manage.py test djcore.tests.test_views --settings=config.settings.local --no-input --parallel`
+`poetry run python manage.py test djstarter.tests.test_views --settings=config.settings.local --no-input --parallel`
 
 ### Faster Tests
 

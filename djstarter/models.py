@@ -172,7 +172,7 @@ class AuthUser(AbstractUser):
     class Meta:
         db_table = 'core_authuser'
         ordering = ['-username']
-        app_label = 'djcore'
+        app_label = 'djstarter'
 
 
 class ListItem(BaseModel):
@@ -185,7 +185,7 @@ class ListItem(BaseModel):
     class Meta:
         db_table = 'core_listitem'
         ordering = ['-created']
-        app_label = 'djcore'
+        app_label = 'djstarter'
         constraints = [
             models.UniqueConstraint(fields=['group', 'label'], name='list_item_unique'),
         ]

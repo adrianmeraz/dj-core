@@ -32,7 +32,7 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djcore',
+    'djstarter',
 ]
 
 MIDDLEWARE = [
@@ -47,7 +47,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'config.urls'
 
-AUTH_USER_MODEL = 'djcore.AuthUser'
+AUTH_USER_MODEL = 'djstarter.AuthUser'
 
 TEMPLATES = [
     {
