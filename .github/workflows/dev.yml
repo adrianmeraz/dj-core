@@ -8,7 +8,7 @@ on:
       - '**.yml'
 
 jobs:
-  run:
+  tests:
     runs-on: ubuntu-20.04
     env:
       PYTHON: '3.8'
