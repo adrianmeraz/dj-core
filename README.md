@@ -193,7 +193,7 @@ postgres=# DROP DATABASE <DB_NAME>;
 
 ### Create Database on Existing Instance using admin command (Optional)
 
-The initial database url will be:
+The initial database url <DB_INSTANCE_URL> will be:
 
 `postgres://postgres:<PASSWORD>@localhost:5432/postgres`
 
