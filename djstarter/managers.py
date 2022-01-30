@@ -3,6 +3,12 @@ from django.db import models
 from django.db.models import Q
 
 
+class BaseManager(models.Manager):
+
+    def get_by_oid(self, oid):
+        return super().get_queryset().get(oid=oid)
+
+
 class AuthUserManager(UserManager):
     def by_id(self, _id):
         q = Q(id=_id)
@@ -13,7 +19,7 @@ class AuthUserManager(UserManager):
         return super().get_queryset().filter(q).first()
 
 
-class ListItemManager(models.Manager):
+class ListItemManager(BaseManager):
 
     def get_value(self, group, label):
         q = Q(group=group, label=label)

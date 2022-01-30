@@ -169,7 +169,7 @@ Details should look similar to this:
 You are connected to database "postgres" as user "postgres" via socket in "/var/run/postgresql" at port "5432".
 ```
 
-### Create new Postgres Database
+### Create Local Postgres Database
 
 Replace placeholder values with real values
 
