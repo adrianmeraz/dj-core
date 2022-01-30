@@ -11,7 +11,6 @@ env = environ.Env()
 
 TIMEOUT = 10
 
-
 class Command(BaseCommand):
     help = 'Creates a new database'
 

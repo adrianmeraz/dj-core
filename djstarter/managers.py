@@ -8,7 +8,7 @@ class BaseManager(models.Manager):
     def get_by_oid(self, oid):
         return super().get_queryset().get(oid=oid)
 
-
+      
 class AuthUserManager(UserManager):
     def by_id(self, _id):
         q = Q(id=_id)
@@ -17,6 +17,7 @@ class AuthUserManager(UserManager):
     def get_service_user(self):
         q = Q(is_superuser=True)
         return super().get_queryset().filter(q).first()
+
 
 
 class ListItemManager(BaseManager):
