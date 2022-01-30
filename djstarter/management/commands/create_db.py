@@ -9,6 +9,7 @@ from psycopg2.extensions import ISOLATION_LEVEL_AUTOCOMMIT
 
 env = environ.Env()
 
+TIMEOUT = 10
 
 class Command(BaseCommand):
     help = 'Creates a new database'
@@ -53,7 +54,7 @@ class Command(BaseCommand):
         new_db_username = kwargs['db_username']
         new_db_password = kwargs['db_password']
 
-        with closing(connect(dbname=dbname, user=user, host=host, password=password)) as con:
+        with closing(connect(dbname=dbname, user=user, host=host, password=password, connect_timeout=TIMEOUT)) as con:
             con.set_isolation_level(ISOLATION_LEVEL_AUTOCOMMIT)
             with con.cursor() as cur:
                 try:

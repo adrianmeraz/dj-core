@@ -169,7 +169,7 @@ Details should look similar to this:
 You are connected to database "postgres" as user "postgres" via socket in "/var/run/postgresql" at port "5432".
 ```
 
-### Create new Postgres Database
+### Create Local Postgres Database
 
 Replace placeholder values with real values
 
@@ -193,7 +193,7 @@ postgres=# DROP DATABASE <DB_NAME>;
 
 ### Create Database on Existing Instance using admin command (Optional)
 
-The initial database url will be:
+The initial database url <DB_INSTANCE_URL> will be:
 
 `postgres://postgres:<PASSWORD>@localhost:5432/postgres`
 

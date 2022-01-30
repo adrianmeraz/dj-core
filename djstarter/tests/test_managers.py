@@ -53,3 +53,9 @@ class ListItemManagerTests(TestCase):
         val = ListItem.objects.get_value(group=list_item.group, label=list_item.label)
 
         self.assertEquals(val, 'value_1')
+
+    def test_get_by_oid(self):
+        list_item_1 = ListItem.objects.create(**self.list_item_data)
+        val = ListItem.objects.get_by_oid(oid=list_item_1.oid)
+
+        self.assertEquals(list_item_1, val)
