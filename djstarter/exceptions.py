@@ -17,3 +17,7 @@ class AppError(Error):
 
 class ApiError(Error):
     """All Api Exceptions inherit from this class"""
+
+
+class NotAuthorized(ApiError):
+    """All Http Status 401 Exceptions inherit from this class"""

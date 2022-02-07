@@ -60,13 +60,23 @@ class APIErrorCheckTests(TestCase):
 
 
 class WrapExceptions(TestCase):
+    def test_ok(self):
+        func = Mock()
+        decorated_function = decorators.wrap_exceptions(raise_as=BlockingIOError)
+        decorated_function(func)()
+        self.assertTrue(func.called)
 
-    def test_wrap_exceptions(self):
+    def test_pass_thru(self):
+        func = Mock(side_effect=BlockingIOError)
+        decorated_function = decorators.wrap_exceptions(raise_as=OSError)
+        with self.assertRaises(BlockingIOError):
+            decorated_function(func)()
 
-        func = Mock(side_effect=ValueError())
-
-        with self.assertRaises(RuntimeError):
-            decorators.wrap_exceptions(raise_as=RuntimeError)(func)()
+    def test_runtime_error(self):
+        func = Mock(side_effect=RuntimeError)
+        decorated_function = decorators.wrap_exceptions(raise_as=OSError)
+        with self.assertRaises(OSError):
+            decorated_function(func)()
 
 
 class DBConnCloseExceptions(TestCase):
