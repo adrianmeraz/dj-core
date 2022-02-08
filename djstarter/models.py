@@ -19,6 +19,10 @@ class BaseModel(models.Model):
     class Meta:
         abstract = True
 
+    @property
+    def oid_str(self):
+        return str(self.oid)
+
 
 class BaseTask(BaseModel):
     """
