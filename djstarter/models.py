@@ -169,6 +169,14 @@ class BaseTask(BaseModel):
         self.save()
 
 
+class Task(BaseTask):
+
+    class Meta:
+        db_table = 'core_task'
+        ordering = ['-created']
+        app_label = 'djstarter'
+
+
 class AuthUser(AbstractUser):
     objects = managers.AuthUserManager()
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
