@@ -1,3 +1,6 @@
+from djstarter import utils
+
+
 class Error(Exception):
     """There was an ambiguous exception that occurred while handling your
     request.
