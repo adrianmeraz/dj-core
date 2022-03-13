@@ -1,6 +1,6 @@
 import logging
 
-from httpx import Client, Timeout, TransportError
+from httpx import Client, Timeout, HTTPStatusError, TransportError
 
 from djstarter import decorators
 
@@ -8,6 +8,7 @@ logger = logging.getLogger(__name__)
 
 TIMEOUT = Timeout(connect=5, read=10, write=5, pool=5)
 RETRY_EXCEPTIONS = (
+    HTTPStatusError,
     TransportError
 )
 
