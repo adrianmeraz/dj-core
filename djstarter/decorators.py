@@ -33,7 +33,7 @@ def retry(retry_exceptions, tries=4, delay=1.5, backoff=2, jitter=0.1):
                     return func(*args, **kwargs)
                 except retry_exceptions as e:
                     j_delay = utils.add_jitter(min_value=0, jitter=jitter, val=m_delay)
-                    logger.warning(f'{type(e)}/{str(e)}, Retrying in {j_delay} seconds...')
+                    logger.warning(f'{type(e)} -> {str(e)} -> Retrying in {j_delay} seconds...')
                     time.sleep(j_delay)
                     m_tries -= 1
                     m_delay *= backoff
