@@ -3,7 +3,7 @@ import time
 from functools import wraps
 
 from django.db import connection, connections
-from httpx import HTTPStatusError
+from httpx import codes, HTTPStatusError
 
 from . import utils
 from .exceptions import ApiError, NotAuthorized
@@ -54,7 +54,7 @@ def api_error_check(func):
             return func(*args, **kwargs)
         except HTTPStatusError as e:
             status_code = e.response.status_code
-            if status_code in (408, 429, 502, 503, 504):     # Retryable status codes
+            if status_code in (408, 429) or status_code >= 500:     # Retryable status codes
                 raise
             if status_code == 401:
                 raise NotAuthorized(*args, **kwargs, **e.__dict__)
