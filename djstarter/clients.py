@@ -1,6 +1,6 @@
 import logging
 
-from httpx import Client, HTTPStatusError, TransportError
+from httpx import Client, HTTPStatusError, TimeoutException, NetworkError, ProxyError
 
 from djstarter import decorators
 
@@ -8,7 +8,9 @@ logger = logging.getLogger(__name__)
 
 RETRY_EXCEPTIONS = (
     HTTPStatusError,
-    TransportError
+    TimeoutException,
+    NetworkError,
+    ProxyError
 )
 
 
