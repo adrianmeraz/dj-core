@@ -6,7 +6,7 @@
     <envs>
       <env name="PYTHONUNBUFFERED" value="1" />
     </envs>
-    <option name="SDK_HOME" value="C:\Users\Adrian\AppData\Local\pypoetry\Cache\virtualenvs\redex-1jW1Vk1S-py3.10\Scripts\python.exe" />
+    <option name="SDK_HOME" value="C:\Users\Adrian\AppData\Local\pypoetry\Cache\virtualenvs\djstarter\Scripts\python.exe" />
     <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     <option name="IS_MODULE_SDK" value="false" />
     <option name="ADD_CONTENT_ROOTS" value="true" />
