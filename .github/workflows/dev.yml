@@ -12,10 +12,10 @@ jobs:
     runs-on: ubuntu-20.04
     env:
       PYTHON: '3.9'
-      DATABASE_URL: ${{secrets.DATABASE_URL}}
-      DJANGO_SETTINGS_MODULE: ${{secrets.DJANGO_SETTINGS_MODULE}}
-      LOGLEVEL: ${{secrets.LOGLEVEL}}
-      PYTHONUNBUFFERED: ${{secrets.PYTHONUNBUFFERED}}
+      DATABASE_URL: 'postgres://postgres:postgres@localhost:5432/postgres'
+      DJANGO_SETTINGS_MODULE: 'config.settings.dev'
+      LOGLEVEL: 'DEBUG'
+      PYTHONUNBUFFERED: 'True'
       SECRET_KEY: ${{secrets.SECRET_KEY}}
     services:
       postgres:
