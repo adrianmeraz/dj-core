@@ -78,7 +78,7 @@ Create project directory and initialize Git
 
 Add Remote Origin
 
-`git remote add origin git@github.com:adrianmeraz/marz-explorer.git`
+`git remote add origin git@github.com:adrianmeraz/dj-starter.git`
 
 Pull repo
 
