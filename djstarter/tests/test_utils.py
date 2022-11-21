@@ -341,3 +341,4 @@ class UtilTests(TestCase):
 
         with self.assertRaises(ValueError):
             utils.dice_roll(chance=-.09)
+
