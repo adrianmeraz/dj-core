@@ -1,4 +1,5 @@
 from datetime import datetime, timezone
+import functools
 from unittest.mock import Mock
 
 from django.db import connections
@@ -45,21 +46,22 @@ class BoundedExecutorTests(TransactionTestCase):
     def test_db_connections_closed(self):
         func = Mock()
 
-        def db_conn_func(f):
+        def db_conn_func(label, f):
             f.result()
-            models.ListItem.objects.create(label='test123', value='val123')
+            models.ListItem.objects.create(label=label, value='val123')
 
             for c1 in connections.all():
                 self.assertFalse(c1.connection.closed)
 
         with utils.BoundedThreadExecutor(max_workers=1) as executor:
-            future = executor.submit(func)
-            future.add_done_callback(db_conn_func)
+            for _ in range(6):
+                future = executor.submit(func)
+                future.add_done_callback(functools.partial(db_conn_func, f'label{_}'))
 
         for c2 in connections.all():
             self.assertIsNone(c2.connection)
 
-        self.assertEquals(func.call_count, 1)
+        self.assertEquals(func.call_count, 6)
 
 
 class PagerTests(TestCase):

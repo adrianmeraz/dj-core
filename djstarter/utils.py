@@ -14,6 +14,7 @@ from urllib.parse import urlparse
 
 from django.db import connection, connections
 from django.utils import dateparse
+from . import decorators
 
 logger = logging.getLogger(__name__)
 
@@ -66,7 +67,7 @@ class BoundedThreadExecutor:
     def submit(self, fn, *args, **kwargs):
         self.semaphore.acquire()
         try:
-            future = self.executor.submit(fn, *args, **kwargs)
+            future = self.executor.submit(decorators.db_conn_close(fn), *args, **kwargs)
         except Exception:
             self.semaphore.release()
             raise
@@ -77,7 +78,6 @@ class BoundedThreadExecutor:
     """See concurrent.futures.Executor#shutdown"""
 
     def shutdown(self, wait=True):
-        close_db_connections()
         self.executor.shutdown(wait)
 
 
