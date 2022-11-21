@@ -2,8 +2,7 @@ import logging
 import time
 from functools import wraps
 
-from django.db import connection, connections
-from httpx import codes, HTTPStatusError
+from httpx import HTTPStatusError
 
 from . import utils
 from .exceptions import ApiError, NotAuthorized
@@ -84,8 +83,7 @@ def wrap_exceptions(raise_as):
 
 def db_conn_close(func):
     """
-    Closes open db connection after check if we are in a transaction block.
-    This is important to check since TestCases fail if this check isn't performed
+    Decorator that closes db connections after block executes
 
     :param func:
     :return:
@@ -96,8 +94,7 @@ def db_conn_close(func):
         try:
             return func(*args, **kwargs)
         finally:
-            if not connection.in_atomic_block:
-                connections.close_all()
+            utils.close_db_connections()
 
     return wrapper_func  # true decorator
 
