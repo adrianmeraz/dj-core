@@ -48,6 +48,7 @@ class BoundedExecutorTests(TransactionTestCase):
         def db_conn_func(f):
             f.result()
             models.ListItem.objects.create(label='test123', value='val123')
+
             for c1 in connections.all():
                 self.assertFalse(c1.connection.closed)
 
