@@ -58,9 +58,6 @@ class BoundedExecutorTests(TransactionTestCase):
                 future = executor.submit(func)
                 future.add_done_callback(functools.partial(db_conn_func, f'label{_}'))
 
-        for c2 in connections.all():
-            self.assertIsNone(c2.connection)
-
         self.assertEquals(func.call_count, 6)
 
 

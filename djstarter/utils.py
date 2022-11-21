@@ -149,10 +149,6 @@ def abbrev_str(s: str, max_length) -> str:
 
 
 def close_db_connections():
-    """
-    Closes open db connection after check if we are in a transaction block.
-    This is important to check since TestCases fail if this check isn't performed
-    """
     connections.close_all()
 
 
