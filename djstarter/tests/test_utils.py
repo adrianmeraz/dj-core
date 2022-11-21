@@ -1,8 +1,10 @@
 from datetime import datetime, timezone
+from unittest.mock import Mock
 
+from django.db import connections
 from django.test import TestCase, TransactionTestCase
 
-from djstarter import utils
+from djstarter import models, utils
 
 
 class QueuedExecutorTests(TransactionTestCase):
@@ -39,6 +41,24 @@ class BoundedExecutorTests(TransactionTestCase):
 
         with self.assertRaises(RuntimeError):
             executor.submit(double, 8)
+
+    def test_db_connections_closed(self):
+        func = Mock()
+
+        def db_conn_func(f):
+            f.result()
+            models.ListItem.objects.create(label='test123', value='val123')
+            for c1 in connections.all():
+                self.assertFalse(c1.connection.closed)
+
+        with utils.BoundedThreadExecutor(max_workers=1) as executor:
+            future = executor.submit(func)
+            future.add_done_callback(db_conn_func)
+
+        for c2 in connections.all():
+            self.assertIsNone(c2.connection)
+
+        self.assertEquals(func.call_count, 1)
 
 
 class PagerTests(TestCase):
@@ -154,6 +174,18 @@ class UtilTests(TestCase):
     def test_abbrev_str(self):
         self.assertEquals(utils.abbrev_str(self.test_str, max_length=10), 'Lorem ipsu...')
         self.assertEquals(utils.abbrev_str(self.test_str, max_length=100), self.test_str)
+
+    def test_close_db_connections(self):
+        # Open a DB connection
+        models.ListItem.objects.create(label='test123', value='val123')
+
+        for c1 in connections.all():
+            self.assertFalse(c1.connection.closed)
+
+        utils.close_db_connections()
+
+        for c2 in connections.all():
+            self.assertTrue(c2.connection.closed)
 
     def test_eye_catcher_line(self):
         self.assertEquals(utils.eye_catcher_line(self.test_str), f'####  {self.test_str}  ####')

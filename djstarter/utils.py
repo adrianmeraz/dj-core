@@ -12,6 +12,7 @@ from enum import Enum
 from threading import BoundedSemaphore
 from urllib.parse import urlparse
 
+from django.db import connection, connections
 from django.utils import dateparse
 
 logger = logging.getLogger(__name__)
@@ -76,6 +77,7 @@ class BoundedThreadExecutor:
     """See concurrent.futures.Executor#shutdown"""
 
     def shutdown(self, wait=True):
+        close_db_connections()
         self.executor.shutdown(wait)
 
 
@@ -144,6 +146,14 @@ class Pager:
 
 def abbrev_str(s: str, max_length) -> str:
     return f'{s[:max_length]}...' if len(s) > max_length else s
+
+
+def close_db_connections():
+    """
+    Closes open db connection after check if we are in a transaction block.
+    This is important to check since TestCases fail if this check isn't performed
+    """
+    connections.close_all()
 
 
 def eye_catcher_line(msg):

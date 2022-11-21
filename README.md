@@ -181,10 +181,25 @@ postgres=# grant all privileges on database <DB_NAME> to <DB_USERNAME>;
 postgres=# ALTER USER <DB_USERNAME> CREATEDB;
 ```
 
+Example:
+
+```
+create database djstarter;
+create user djstarter with encrypted password 'djstarter';
+grant all privileges on database djstarter to djstarter;
+ALTER USER djstarter CREATEDB;
+```
+
 To Delete the local database, run:
 
 ```
 postgres=# DROP DATABASE <DB_NAME>;
+```
+
+Example:
+
+```
+postgres=# DROP DATABASE djstarter
 ```
 
 ### Local jdbc string
