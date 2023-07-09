@@ -10,7 +10,7 @@ from .exceptions import ApiError, NotAuthorized
 logger = logging.getLogger(__name__)
 
 
-def retry(retry_exceptions, tries=4, delay=1.5, backoff=2, jitter=0.1):
+def retry(retry_exceptions: tuple, tries: int = 4, delay: float = 1.5, backoff: float = 2.0, jitter: float = 0.1):
     """
     Retry calling the decorated function using an exponential backoff.
 
@@ -18,26 +18,29 @@ def retry(retry_exceptions, tries=4, delay=1.5, backoff=2, jitter=0.1):
         :param retry_exceptions: Exceptions to retry on before raise
         :param tries: Number of times to try (not retry) before giving up.
         :param delay: Initial delay between retries in seconds.
-        :param backoff: Backoff multiplier (e.g. value of 2 will double the delay each retry).
+        :param backoff: Backoff multiplier (e.g. value of 2.0 will double the delay each retry).
         :param jitter: adds jitter to delay
     """
     def deco_func(func):
 
         @wraps(func)
         def wrapper_func(*args, **kwargs):
-
-            m_tries, m_delay = tries, delay
-            while m_tries > 1:
+            m_tries = 1
+            m_delay = delay
+            f_qname = getattr(func, "__qualname__", None)
+            while m_tries < tries:
                 try:
                     return func(*args, **kwargs)
                 except retry_exceptions as e:
                     j_delay = utils.add_jitter(min_value=0, jitter=jitter, val=m_delay)
-                    logger.warning(f'{type(e)} -> {str(e)} -> Retrying in {j_delay} seconds...')
+                    logger.warning(
+                        f'{f_qname!r}, {type(e)} -> Tries: {m_tries} / {tries}, Retrying in {j_delay:.3f} seconds...'
+                    )
                     time.sleep(j_delay)
-                    m_tries -= 1
+                    m_tries += 1
                     m_delay *= backoff
 
-            logger.warning(f'Max tries reached: {tries}')
+            logger.warning(f'{f_qname!r} -> Max tries reached: {m_tries} / {tries}')
             return func(*args, **kwargs)
 
         return wrapper_func  # true decorator
@@ -113,7 +116,7 @@ def timing(func):
     return wrap_func
 
 
-def delay_fn(seconds=0, jitter=0.1):
+def delay_fn(seconds: float = 0, jitter: float = 0.1):
     """
     Delays wrapped function
 

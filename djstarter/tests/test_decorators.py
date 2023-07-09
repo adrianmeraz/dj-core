@@ -14,7 +14,21 @@ class RetryTests(TestCase):
     """
 
     def test_retry(self):
-        tries = 5
+        tries = 7
+        func = Mock(side_effect=exceptions.ApiError("Test"))
+        decorated_function = decorators.retry(
+            retry_exceptions=(exceptions.ApiError,),
+            tries=tries,
+            delay=0,
+            backoff=1,
+            jitter=0,
+        )(func)
+        with self.assertRaises(exceptions.ApiError):
+            decorated_function()
+        self.assertEquals(func.call_count, tries)
+
+    def test_1_retry(self):
+        tries = 1
         func = Mock(side_effect=exceptions.ApiError("Test"))
         decorated_function = decorators.retry(
             retry_exceptions=(exceptions.ApiError,),
