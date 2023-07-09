@@ -34,7 +34,7 @@ def retry(retry_exceptions: tuple, tries: int = 4, delay: float = 1.5, backoff: 
                 except retry_exceptions as e:
                     j_delay = utils.add_jitter(min_value=0, jitter=jitter, val=m_delay)
                     logger.warning(
-                        f'{f_qname!r}, {type(e)} -> Tries: {m_tries} / {tries}, Retrying in {j_delay:.3f} seconds...'
+                        f'{f_qname!r} -> Exception: {type(e)}, {str(e)}, Tries: {m_tries} / {tries}, Retrying in {j_delay:.3f} seconds...'
                     )
                     time.sleep(j_delay)
                     m_tries += 1
